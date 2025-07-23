@@ -1,0 +1,133 @@
+* {
+    box-sizing: border-box;
+}
+body {
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #fdfdfd;
+    color: #333;
+}
+h1, h2, h3, h4, h5, h6 {
+    color: #1e40af;
+    text-transform: capitalize;
+    letter-spacing: 1px;
+    word-spacing: 2px;
+}
+p {
+    line-height: 1.6;
+    text-align: justify;
+    text-indent: 20px;
+}
+section {
+    margin-bottom: 40px;
+    padding: 20px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+nav {
+    display: flex;
+    justify-content: space-around;
+    background-color: #e0f2fe;
+    padding: 10px;
+    border-radius: 5px;
+}
+nav a {
+    text-decoration: none;
+    color: #0369a1;
+    font-weight: bold;
+}
+nav a:hover {
+    text-decoration: underline;
+    color: #0284c7;
+}
+input, select, textarea, button {
+    margin: 6px 0;
+    padding: 8px;
+    border: 1px solid #999;
+    border-radius: 4px;
+    font-size: 1rem;
+    width: 100%;
+    max-width: 400px;
+}
+input[type="checkbox"], input[type="radio"] {
+    width: auto;
+}
+button {
+    background-color: #1d4ed8;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+button:hover {
+    background-color: #2563eb;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 12px;
+    border: 1px solid #ccc;
+    text-align: center;
+}
+thead {
+    background-color: #dbeafe;
+    font-weight: bold;
+}
+img {
+    max-width: 100%;
+    height: auto;
+    border: 2px solid #ccc;
+    border-radius: 6px;
+}
+audio, video {
+    margin-top: 10px;
+    display: block;
+}
+article {
+    background-color: #fef9c3;
+    padding: 15px;
+    border-left: 5px solid #facc15;
+}
+aside {
+    background-color: #f0fdf4;
+    padding: 10px;
+    border-left: 5px solid #34d399;
+}
+footer {
+    text-align: center;
+    margin-top: 40px;
+    padding: 15px;
+    background-color: #e5e7eb;
+    border-top: 2px solid #ccc;
+}
+button {
+    transition: background-color 0.3s ease;
+}
+img:hover {
+    transform: scale(1.05);
+    transition: transform 0.2s ease-in-out;
+}
+.flex-demo {
+    display: flex;
+    gap: 20px;
+}
+.flex-demo > div {
+    flex: 1;
+    background: #ddd;
+    padding: 20px;
+    text-align: center;
+}
+.grid-demo {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+.grid-demo > div {
+    background: #e0f7fa;
+    padding: 15px;
+    border: 1px solid #bbb;
+    text-align: center;
+}
