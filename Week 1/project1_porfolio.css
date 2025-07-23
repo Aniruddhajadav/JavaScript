@@ -1,0 +1,18 @@
+* {
+    font-family: Arial, sans-serif;
+}
+body {
+    margin: 10px;
+    padding: 10px;
+    background-color: lightyellow;
+    border: 2px solid #ccc;
+}
+hr {
+    opacity: 0.5;
+}
+img {
+    padding: 10px;
+}
+h1, h2, h3 {
+    color: darkblue;
+}
