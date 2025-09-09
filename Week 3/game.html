@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="game.css">
+</head>
+
+<body>
+    <div id="box">
+        <div id="user-input">
+            <h4>Number Guessing Game</h4>
+            <label for="enter_no">Enter number between 0 - 100 :</label>
+            <input type="number" name="enter_no" id="input">
+        </div>
+        <div id="hint-showing">
+            <p>Hint : <span id="hint"></span> </p>
+        </div>
+        <div id="score-showing">
+            <p>Score : <span id="score"></span> </p>
+        </div>
+        <div id="buttons-box">
+            <button class="buttons" id="start" onclick="start_game()">Start</button>
+            <button class="buttons" id="submit" onclick="submit_game()">Submit</button>
+            <button class="buttons" id="reset" onclick="reset_game()">Reset</button>
+        </div>
+    </div>
+    <script>
+        var start = document.getElementById("start");
+        var hint = document.getElementById("hint");
+        var score = document.getElementById("score");
+        var input = document.getElementById("input");
+        var submit = document.getElementById("submit");
+        var reset = document.getElementById("reset");
+        var box_color = document.getElementById("box");
+        let random_value = Math.floor(Math.random() * 101);
+        let count = 30;
+        function start_game() {
+            alert("The game has started");
+            score.textContent = count;
+        }
+        function submit_game() {
+            let uservalue = Number(input.value);
+            let found = Number(input.value);
+
+            if (uservalue<0 || uservalue>100 || uservalue==" "){
+                hint.textContent="Please enter a valid number";
+                count++;
+            }else{
+            if (uservalue === random_value) {
+                hint.textContent = "Yay! You have won the game :)";
+                alert("Your score is "+ count--)
+            } else if (uservalue < random_value) {
+                hint.textContent = "The entered value is too small";
+            } else {
+                hint.textContent = "The entered value is too big";
+            } 
+            }
+
+            if (found != random_value) {
+                count--
+                score.textContent = count;
+                if (count === -1) {
+                    alert("Your score is 0.You have no chance to play.Please reset to play again :(");
+                    score.textContent=0;
+                }
+            }
+        }
+        function reset_game() {
+            input.value = "";
+            hint.textContent = "";
+            score.textContent = "";
+            random_value = Math.floor(Math.random() * 101);
+            count = 30;
+            score.textContent = count;
+            alert("Game has rested");
+        }
+    </script>
+</body>
+
+</html>
