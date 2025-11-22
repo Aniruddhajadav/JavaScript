@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Form Validator</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="form-container">
+    <h1>📩 Contact Us</h1>
+
+    <form id="contactForm">
+      <label for="name">Full Name:</label>
+      <input type="text" id="name" placeholder="Enter your name">
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" placeholder="Enter your email">
+
+      <label for="message">Message:</label>
+      <textarea id="message" placeholder="Write your message"></textarea>
+
+      <button type="submit">Submit</button>
+    </form>
+
+    <p id="errorMsg"></p>
+    <p id="successMsg"></p>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
