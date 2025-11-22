@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Tool Productivity Hub</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body> 
+    
+    <div id="notification-bar">Notification Message</div>
+
+    <div id="auth-container" class="app-card">
+        <h2><span class="comment">//</span> User Profile Login</h2>
+        <div class="login-form">
+            <input type="text" id="username-input" class="input-style" placeholder="Enter username..." autocomplete="username">
+            <input type="password" id="password-input" class="input-style" placeholder="Enter password..." autocomplete="current-password">
+            <button id="login-btn" class="button button-primary">Login / Create Profile</button>
+        </div>
+        <div id="profile-list-container">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h3>Click to fill username:</h3>
+                <button id="manage-users-btn" class="button button-red" style="padding: 0.5rem 1rem; font-size: 0.8rem; margin-bottom: 1rem;">Manage Users</button>
+            </div>
+            <div id="profile-list">
+                <p class="empty-list-message">// No profiles found</p>
+            </div>
+        </div>
+    </div>
+    
+    <div id="modal-backdrop-auth" class="modal-backdrop hidden"></div>
+    <div id="user-management-modal" class="app-card modal-container hidden">
+        <h3>Manage Users</h3>
+        <p style="font-size: 0.875rem; color: var(--text-dim); margin-top: 0;">// Select users to permanently delete</p>
+        <div id="user-toggle-list" class="modal-toggle-list">
+            <p class="empty-list-message">// No profiles found</p>
+        </div>
+        <p style="font-size: 0.875rem; color: var(--accent-yellow); margin: 1rem 0 0.5rem 0;">// Type <b>DELETE</b> to confirm deletion</p>
+        <input type="text" id="delete-users-confirm-input" class="input-style" placeholder="Type DELETE">
+        <button id="delete-selected-users-btn" class="button button-red" disabled style="width: 100%; margin-top: 1rem;">Delete Selected Users</button>
+        <button id="cancel-user-delete-btn" class="button" style="width: 100%; margin-top: 0.5rem; background-color: var(--bg-tertiary); color: var(--text-normal);">Cancel</button>
+    </div>
+
+    <div id="modal-backdrop-calendar" class="modal-backdrop hidden"></div>
+    <div id="add-todo-modal" class="app-card modal-container hidden">
+        <h3 id="calendar-modal-title">Add Task</h3>
+        
+        <h4 style="font-size: 0.9rem; color: var(--accent-yellow); margin: 0 0 0.5rem 0;">// Tasks for this day</h4>
+        <div id="calendar-modal-task-list">
+            <p class="empty-list-message" style="font-size: 0.9rem;">// No tasks for this day</p>
+        </div>
+        
+        <h4 style="font-size: 0.9rem; color: var(--accent-yellow); margin: 1rem 0 0.5rem 0;">// Add new task</h4>
+        <div style="display: flex; flex-direction: column; gap: 1rem;">
+            <input type="text" id="calendar-todo-task-input" class="input-style" placeholder="Enter task name...">
+            <input type="hidden" id="calendar-todo-date-input">
+            <button id="calendar-add-todo-btn" class="button button-primary">Add Task</button>
+            <button id="calendar-cancel-btn" class="button" style="background-color: var(--bg-tertiary); color: var(--text-normal);">Cancel</button>
+        </div>
+    </div>
+
+    <div id="main-app" class="hidden">
+        <header>
+            <h1><span class="comment">//</span> Ani-Tool Hub</h1>
+            <p>
+                <span id="user-icon-display" class="profile-icon" style="margin-right: 0.5rem;"></span>
+                <span id="user-id-display"></span>
+                <button id="logout-btn" class="button-link">[Logout]</button>
+            </p>
+        </header>
+
+        <div id="tab-container">
+            <button class="tab-button" data-tab-id="dashboard">dashboard.sh</button>
+            <button class="tab-button" data-tab-id="clock-stopwatch">clock.js</button>
+            <button class="tab-button" data-tab-id="notes">notes.md</button>
+            <button class="tab-button" data-tab-id="todo">todo.list</button>
+            <button class="tab-button" data-tab-id="calendar">calendar.dat</button>
+            <button class="tab-button" data-tab-id="converter">converter.py</button>
+            <button class="tab-button" data-tab-id="calculator">calc.exe</button>
+            <button class="tab-button" data-tab-id="user-settings">user.settings</button>
+            <button class="tab-button" data-tab-id="appearance">appearance.json</button>
+        </div>
+
+        <div id="content-container">
+            
+            <div id="dashboard" class="app-content app-card">
+                <div class="app-header">
+                    <h2>User Dashboard</h2>
+                    <button id="customize-btn" class="button button-yellow" style="padding: 0.5rem 1rem; font-size: 0.8rem; margin-bottom: 1rem;">Customize Layout</button>
+                </div>
+                
+                <div class="dashboard-grid">
+                    <div id="widget-welcome" class="dashboard-widget" draggable="true">
+                        <h3 class="widget-title">WELCOME</h3>
+                        <div class="widget-content">
+                            <p>Logged in as: <span id="dash-welcome-user">user</span></p>
+                            <button id="dash-manage-account-btn" class="button" style="background-color: var(--bg-tertiary); color: var(--text-normal); margin-top: 1rem; width: 100%;">Manage Account</button>
+                        </div>
+                    </div>
+                    <div id="widget-time" class="dashboard-widget" draggable="true">
+                        <h3 class="widget-title">SYSTEM_TIME</h3>
+                        <div class="widget-content">
+                            <div id="dash-time">00:00:00 AM/PM</div>
+                            <div id="dash-date">Thursday, Nov 13, 2025</div>
+                        </div>
+                    </div>
+                    
+                    <div id="widget-agenda" class="dashboard-widget" draggable="true">
+                        <h3 class="widget-title">AGENDA_TODAY</h3>
+                        <div class="widget-content" id="dash-agenda-list">
+                            <p class="empty-list-message" style="font-size: 0.9rem;">// No tasks due today</p>
+                        </div>
+                    </div>
+                    
+                    <div id="dash-stopwatch-widget" class="dashboard-widget hidden" draggable="true">
+                        <h3 class="widget-title">STOPWATCH_RUNNING</h3>
+                        <div class="widget-content">
+                            <div id="dash-stopwatch-display" class="dash-timer-display">00:00:00.00</div>
+                        </div>
+                    </div>
+                    <div id="dash-timer-widget" class="dashboard-widget hidden" draggable="true">
+                        <h3 class="widget-title">TIMER_ACTIVE</h3>
+                        <div class="widget-content">
+                            <div id="dash-timer-display" class="dash-timer-display">00:00:00</div>
+                        </div>
+                    </div>
+                    <div id="widget-notes" class="dashboard-widget" draggable="true">
+                        <h3 class="widget-title">NOTES_STATS</h3>
+                        <div class="widget-content">
+                            <span class="widget-stat" id="dash-note-count">0</span> Total Notes
+                        </div>
+                    </div>
+                    <div id="widget-tasks" class="dashboard-widget" draggable="true">
+                        <h3 class="widget-title">TASK_STATS</h3>
+                        <div class="widget-content" id="dash-todo-stats">
+                            <span class="stat-pending"><span class="widget-stat" id="dash-todo-pending">0</span> Pending</span>
+                            <span class="stat-completed"><span class="widget-stat" id="dash-todo-completed">0</span> Completed</span>
+                        </div>
+                    </div>
+                    
+                    <div id="widget-account" class="dashboard-widget" draggable="true">
+                        <h3 class="widget-title">ACCOUNT_MGMT</h3>
+                        <div class="widget-content">
+                            <p style="margin-top: 0; margin-bottom: 1rem; color: var(--text-dim);">// Type password to delete</p>
+                            <div class="delete-account-form">
+                                <input type="password" id="delete-password-input" class="input-style" placeholder="Confirm password..." autocomplete="new-password">
+                                <button id="delete-account-btn" class="button button-red">Delete Account</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="modal-backdrop" class="modal-backdrop hidden"></div>
+                <div id="customize-modal" class="app-card modal-container hidden">
+                    <h3>Customize Widgets</h3>
+                    <p style="font-size: 0.875rem; color: var(--text-dim); margin-top: 0;">// Uncheck to hide widgets</p>
+                    <div id="widget-toggle-list" class="modal-toggle-list">
+                        </div>
+                    <button id="close-customize-modal-btn" class="button button-primary" style="margin-top: 1.5rem; width: 100%;">Close</button>
+                </div>
+            </div>
+
+            <div id="clock-stopwatch" class="app-content app-card hidden">
+                <div class="clock-display">
+                    <h2>Digital Clock</h2>
+                    <div id="digital-clock">00:00:00 AM/PM</div>
+                    <p id="date-display"></p>
+                </div>
+                <div class="stopwatch-container">
+                    <h2>Stopwatch</h2>
+                    <div class="stopwatch-display">
+                        <span id="stopwatch-hours">00</span>:
+                        <span id="stopwatch-minutes">00</span>:
+                        <span id="stopwatch-seconds">00</span>.<span id="stopwatch-milliseconds" class="ms">00</span>
+                    </div>
+                    <div class="stopwatch-controls">
+                        <button id="stopwatch-start-btn" class="button button-green">Start</button>
+                        <button id="stopwatch-reset-btn" class="button button-red">Reset</button>
+                    </div>
+                </div>
+                <div class="timer-container">
+                    <h2>Countdown Timer</h2>
+                    <div id="timer-input-container" class="timer-inputs">
+                        <input type="number" id="timer-hours-input" placeholder="HH" min="0" max="99" value="">
+                        <span>:</span>
+                        <input type="number" id="timer-minutes-input" placeholder="MM" min="0" max="59" value="">
+                        <span>:</span>
+                        <input type="number" id="timer-seconds-input" placeholder="SS" min="0" max="59" value="">
+                    </div>
+                    <div id="timer-display" class="timer-display hidden">
+                        00:00:00
+                    </div>
+                    <div class="timer-controls">
+                        <button id="timer-start-btn" class="button button-green">Start</button>
+                        <button id="timer-pause-btn" class="button button-yellow hidden">Pause</button>
+                        <button id="timer-reset-btn" class="button button-red hidden">Reset</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="notes" class="app-content app-card hidden">
+                <h2>Notes (Markdown)</h2>
+                
+                <div class="search-bar-container">
+                     <input id="note-search-input" type="text" placeholder="Search notes by title or content..." class="input-style">
+                </div>
+
+                <div style="display: flex; flex-direction: column; gap: 1rem; margin-bottom: 1.5rem;">
+                    <input id="note-title" type="text" placeholder="Title: (e.g., 'Algorithm Ideas')" class="input-style" maxlength="100">
+                    <textarea id="note-content" placeholder="Write your note here..." class="input-style"></textarea>
+                    <div id="note-stats-display" style="text-align: right; font-size: 0.8rem; color: var(--text-dim); margin-top: -0.5rem; height: 1em;">
+                        <!-- Stats will be injected here by JS -->
+                    </div>
+
+                    <button id="save-note-btn" class="button button-primary">Save Note</button>
+                </div>
+                <div id="notes-list" class="list-container">
+                    <p class="empty-list-message">// No notes found for this user</p>
+                </div>
+            </div>
+
+            <div id="todo" class="app-content app-card hidden">
+                <h2>To-Do List</h2>
+                
+                <div class="app-header" style="margin-bottom: 1.5rem;">
+                    <div class="search-bar-container" style="flex-grow: 1; margin-bottom: 0;">
+                         <input id="todo-search-input" type="text" placeholder="Search tasks or #tags..." class="input-style">
+                    </div>
+                    <div id="todo-sort-buttons" class="button-group" style="margin-left: auto;">
+                        <button id="sort-todos-newest" class="button active" data-sort="newest">Newest</button>
+                        <button id="sort-todos-deadline" class="button" data-sort="deadline">Deadline</button>
+                    </div>
+                </div>
+
+                <div style="display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.5rem;">
+                    <div style="display: flex; gap: 0.5rem;">
+                        <input id="todo-input" type="text" placeholder="Add new task... (e.g., 'Finish report #work')" class="input-style">
+                        <button id="add-todo-btn" class="button button-primary" style="white-space: nowrap;">Add</button>
+                    </div>
+                    <div style="display: flex; gap: 0.5rem; align-items: center;">
+                         <label for="todo-deadline-input" style="font-size: 0.9rem; white-space: nowrap; color: var(--text-dim);">// Deadline:</label>
+                         <input id="todo-deadline-input" type="date" class="input-style">
+                    </div>
+                </div>
+                <div id="todo-list" class="list-container">
+                    <p class="empty-list-message">// User task list is empty</p>
+                </div>
+            </div>
+
+            <div id="calendar" class="app-content app-card hidden">
+                <h2>Calendar</h2>
+                <div class="calendar-container">
+                    <div class="calendar-header">
+                        <button id="calendar-prev-btn" class="calendar-nav-btn">&#8249;</button>
+                        <h3 id="calendar-month-year">November 2025</h3>
+                        <button id="calendar-next-btn" class="calendar-nav-btn">&#8250;</button>
+                    </div>
+                    <div class="calendar-grid-weekdays">
+                        <div class="day-name">SUN</div>
+                        <div class="day-name">MON</div>
+                        <div class="day-name">TUE</div>
+                        <div class="day-name">WED</div>
+                        <div class="day-name">THU</div>
+                        <div class="day-name">FRI</div>
+                        <div class="day-name">SAT</div>
+                    </div>
+                    <div id="calendar-grid-days" class="calendar-grid-days">
+                        </div>
+                </div>
+            </div>
+
+            <div id="converter" class="app-content app-card hidden">
+                <h2>Unit Converter</h2>
+                <div>
+                    <div class="converter-section">
+                        <h3>Length_Conversion (Meters ↔ Feet)</h3>
+                        <div class="converter-grid">
+                            <div>
+                                <label for="meters-input">Meters (m):</label>
+                                <input id="meters-input" type="number" class="input-style" placeholder="float m = ...">
+                            </div>
+                            <div>
+                                <label for="feet-input">Feet (ft):</label>
+                                <input id="feet-input" type="number" class="input-style" placeholder="float ft = ...">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="converter-section">
+                        <h3>Temp_Conversion (Celsius ↔ Fahrenheit)</h3>
+                        <div class="converter-grid">
+                            <div>
+                                <label for="celsius-input">Celsius (°C):</label> 
+                                <input id="celsius-input" type="number" class="input-style" placeholder="float c = ...">
+                            </div>
+                            <div>
+                                <label for="fahrenheit-input">Fahrenheit (°F):</label>
+                                <input id="fahrenheit-input" type="number" class="input-style" placeholder="float f = ..." data-unit="f">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="converter-section">
+                        <h3>Data_Storage (Megabytes ↔ Gigabytes)</h3>
+                        <div class="converter-grid">
+                            <div>
+                                <label for="mb-input">Megabytes (MB):</label>
+                                <input id="mb-input" type="number" class="input-style" placeholder="float mb = ...">
+                            </div>
+                            <div>
+                                <label for="gb-input">Gigabytes (GB):</label>
+                                <input id="gb-input" type="number" class="input-style" placeholder="float gb = ...">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="converter-section">
+                        <h3>Number_Base (Decimal ↔ Hexadecimal)</h3>
+                        <div class="converter-grid">
+                            <div>
+                                <label for="decimal-input">Decimal (Base-10):</label> 
+                                <input id="decimal-input" type="text" class="input-style" placeholder="int dec = ...">
+                            </div>
+                            <div>
+                                <label for="hex-input">Hexadecimal (Base-16):</label>
+                                <input id="hex-input" type="text" class="input-style" placeholder="string hex = ...">
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+            </div>
+            
+            <div id="calculator" class="app-content app-card hidden">
+                <h2>Calculator</h2>
+                <input type="text" id="calc-display" class="input-style" readonly placeholder="0">
+                <div id="calculator-grid" class="calculator-grid">
+                    <button class="calc-button clear span-2">AC</button>
+                    <button class="calc-button">DEL</button>
+                    <button class="calc-button operator">/</button>
+                    <button class="calc-button">7</button>
+                    <button class="calc-button">8</button>
+                    <button class="calc-button">9</button>
+                    <button class="calc-button operator">*</button>
+                    <button class="calc-button">4</button>
+                    <button class="calc-button">5</button>
+                    <button class="calc-button">6</button>
+                    <button class="calc-button operator">-</button>
+                    <button class="calc-button">1</button>
+                    <button class="calc-button">2</button>
+                    <button class="calc-button">3</button>
+                    <button class="calc-button operator">+</button>
+                    <button class="calc-button span-2">0</button>
+                    <button class="calc-button">.</button>
+                    <button class="calc-button equal">=</button>
+                </div>
+            </div>
+            
+            <div id="user-settings" class="app-content app-card hidden">
+                <h2>User Settings</h2>
+                
+                <div class="settings-group">
+                    <h3>Profile Icon</h3>
+                    <p>// Select an icon for your profile</p>
+                    <div id="icon-picker">
+                        </div>
+                </div>
+                
+                <div class="settings-group">
+                    <h3>Change Username</h3>
+                    <p>// This will rename all your saved data</p>
+                    <div class="form-group" style="gap: 1rem;">
+                        <input type="text" id="new-username-input" class="input-style" placeholder="Enter new username..." autocomplete="username">
+                        <button id="change-username-btn" class="button button-primary">Save Username</button>
+                    </div>
+                </div>
+
+                <div class="settings-group">
+                    <h3>Change Password</h3>
+                    <p>// Enter your old and new password</p>
+                    <div class="form-group" style="gap: 1rem;">
+                        <input type="password" id="old-password-input" class="input-style" placeholder="Enter OLD password..." autocomplete="current-password">
+                        <input type="password" id="new-password-input" class="input-style" placeholder="Enter NEW password..." autocomplete="new-password">
+                        <input type="password" id="confirm-password-input" class="input-style" placeholder="Confirm NEW password..." autocomplete="new-password">
+                        <button id="change-password-btn" class="button button-primary">Save Password</button>
+                    </div>
+                </div>
+                
+                <div class="settings-group">
+                    <h3>Export My Data</h3>
+                    <p>// Save a backup file of all your notes, tasks, and settings.</p>
+                    <button id="export-data-btn" class="button button-green">Download Backup File</button>
+                </div>
+                
+                <div class="settings-group">
+                    <h3>Import Data</h3>
+                    <p>// Import a backup file. WARNING: This will overwrite all current data for your user.</p>
+                    <input type="file" id="import-file-input" class="input-style" accept=".json">
+                    <button id="import-data-btn" class="button button-red" style="margin-top: 0.5rem;">Import and Overwrite Data</button>
+                </div>
+                
+            </div>
+            
+            <div id="appearance" class="app-content app-card hidden">
+                <h2>Appearance</h2>
+                <div class="settings-group">
+                    <h3>Theme (Global)</h3>
+                    <p>// Applies to login screen and all users</p>
+                    <div class="button-group">
+                        <button id="theme-btn-dark" class="button">Dark Mode</button>
+                        <button id="theme-btn-light" class="button">Light Mode</button>
+                    </div>
+                </div>
+                <div class="settings-group">
+                    <h3>Accent Color (User)</h3>
+                    <p>// Saved for <b><span id="settings-user-accent">user</span></b></p>
+                    <input type="color" id="accent-color-picker" value="#007acc">
+                </div>
+                <div class="settings-group">
+                    <h3>Font Size (User)</h3>
+                    <p>// Saved for <b><span id="settings-user-font">user</span></b></p>
+                    <label id="font-size-label">16px</label>
+                    <input type="range" id="font-size-slider" min="12" max="20" step="1" value="16">
+                </div>
+
+                <button id="reset-settings-btn" class="button button-red">Reset My Settings to Default</button>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="script.js" defer></script>
+</body>
+</html>
