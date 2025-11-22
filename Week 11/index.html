@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Product Cards</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+
+    <header class="site-header">
+        <h1>Our Awesome Products</h1>
+        <div class="header-controls">
+            <div class="theme-switcher">
+                <label for="theme-toggle">Dark Mode</label>
+                <input type="checkbox" id="theme-toggle">
+            </div>
+            <div id="open-cart-btn" class="shopping-cart" title="Open Cart">
+                <span>🛒 Cart: </span>
+                <span id="cart-count">0</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="card-container">
+        <div class="card" data-id="1" data-price="99.99">
+            <div class="card-image">
+                <img src="https://via.placeholder.com/400x300" alt="A sleek, modern gadget">
+                <span class="badge new">New</span>
+            </div>
+            <div class="card-content">
+                <h2 class="product-title">Modern Gadget</h2>
+                <p class="product-description">This is a sleek and modern gadget that will revolutionize your daily life with its amazing features.</p>
+                <p class="product-price">$99.99</p>
+                <button class="btn">Add to Cart</button>
+            </div>
+            <span class="like-icon" title="Like this product">&hearts;</span>
+        </div>
+
+        <div class="card" data-id="2" data-price="149.50">
+            <div class="card-image">
+                <img src="https://via.placeholder.com/400x300" alt="A vintage-style camera">
+                <span class="badge sale">Sale</span>
+            </div>
+            <div class="card-content">
+                <h2 class="product-title">Vintage Camera</h2>
+                <p class="product-description">Capture timeless memories with this classic vintage camera, combining retro style with modern optics.</p>
+                <p class="product-price"><span class="original-price">$199.99</span> $149.50</p>
+                <button class="btn">Add to Cart</button>
+            </div>
+            <span class="like-icon" title="Like this product">&hearts;</span>
+        </div>
+
+        <div class="card" data-id="3" data-price="75.00">
+            <div class="card-image">
+                <img src="https://via.placeholder.com/400x300" alt="A comfortable pair of sneakers">
+            </div>
+            <div class="card-content">
+                <h2 class="product-title">Comfy Sneakers</h2>
+                <p class="product-description">Walk on clouds with these ultra-comfortable sneakers, perfect for both sports and casual wear.</p>
+                <p class="product-price">$75.00</p>
+                <button class="btn">Add to Cart</button>
+            </div>
+            <span class="like-icon" title="Like this product">&hearts;</span>
+        </div>
+    </div>
+
+    <!-- The Cart Modal -->
+    <div id="cart-modal" class="modal">
+      <!-- Modal content -->
+      <div class="modal-content">
+        <span class="close-btn">&times;</span>
+        <h2>Your Cart</h2>
+        <div id="cart-items-container">
+            <!-- Cart items will be dynamically inserted here -->
+        </div>
+        <div class="cart-footer">
+            <div class="cart-totals">
+                <p>Total Items: <span id="cart-total-count">0</span></p>
+                <p>Total Price: $<span id="cart-total-price">0.00</span></p>
+            </div>
+            <button id="clear-cart-btn" class="btn-danger">Clear Cart</button>
+        </div>
+      </div>
+    </div>
+</body>
+</html>
